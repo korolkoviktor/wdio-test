@@ -1,38 +1,38 @@
-const HomePage=require('./page');
+const HomePage = require('./page');
 
-class NewPaste extends HomePage {    
+class NewPastePage extends HomePage {
+    constructor() {
+        super();
+    }
     get newPasteField() {
-        return $('textarea[id=postform-text]');    
+        return $('#postform-text');
     }
-    get adCloseBtn() {
-        return $('#vi-smartbanner > vli > vli');
+    get adCloseButton() {
+        return $('.vliIgnore vli');
     }
-    get dropdownMenuExpiration() {
-        return $("div.field-postform-expiration>div>span>span.selection>span>span.select2-selection__arrow");
+    get dropDownMenuExpiration() {       
+        return $('#select2-postform-expiration-container');
     }
-    get value10MinExpirtMenu() {
-        return $('//li[text()="10 Minutes"]');        
+    get value10MinExpirationMenu() {
+        return $('//li[text()="10 Minutes"]');
     }
-    get dropdownMenuHighlght() {
-        return $('div.field-postform-format>div>span>span.selection>span>span.select2-selection__arrow')
+    get dropDownMenuHighlght() {        
+        return $('.select2-selection--single #select2-postform-format-container');
     }
     get valueBashHighlghtMenu() {
         return $("//li[text()='Bash']");
-    }
-    get valueExpirationContainer() {
-        return $('[id="select2-postform-expiration-container"]');
-    }
-    get checkboxSntxHighlight() {
-        return $('div.toggle__control');
+    }    
+    get checkBoxSyntaxHighlight() {
+        return $('.toggle__control');
     }
     get titleField() {
-        return $("input[id='postform-name']"); 
+        return $('#postform-name');
     }
-    get createBtn() {
-        return $("button.btn.-big");
-    }    
+    get createButton() {
+        return $('.btn.-big');
+    }
     open() {
         return super.open("https://pastebin.com/");
     }
 }
-module.exports =NewPaste;
+module.exports = NewPastePage;

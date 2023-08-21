@@ -1,37 +1,40 @@
-const NewPaste = require('../pages/newpaste');
-const SavedPaste=require('../pages/savedpaste');
-const testdata1=require('../testdata/datatest1');
-const testdata2=require('../testdata/datatest2');
-const newpaste=new NewPaste();
-const savedpaste=new SavedPaste();
+const NewPastePage = require('../pages/newpaste');
+const SavedPastePage = require('../pages/savedpaste');
+const testData1 = require('../testdata/datatest1');
+const testData2 = require('../testdata/datatest2');
+const newpaste = new NewPastePage();
+const savedpaste = new SavedPastePage();
 
-describe('Test suite', () => {   
-    beforeEach(()=> {
-        newpaste.open();
-    })     
-    it('First test: I can win', async () => {                         
-        await newpaste.newPasteField.setValue(testdata1.text);
-        await newpaste.adCloseBtn.click(); // close Advertisment Bunner       
-        await newpaste.dropdownMenuExpiration.click();             
-        await newpaste.value10MinExpirtMenu.click();               
-        await newpaste.titleField.setValue(testdata1.title);            
-        expect(await newpaste.newPasteField.getValue()).toEqual(testdata1.text); 
-        expect(await newpaste.valueExpirationContainer.getText()).toEqual(testdata1.expiration);               
-        expect(await newpaste.titleField.getValue()).toEqual(testdata1.title);               
-    })
-    it('Second test: Bring it on', async ()=> {        
-        await newpaste.newPasteField.setValue(testdata2.text); 
-        await newpaste.adCloseBtn.click(); // close Advertisment Bunner                
-        await newpaste.checkboxSntxHighlight.click();                  
-        await newpaste.dropdownMenuHighlght.click();        
-        await newpaste.valueBashHighlghtMenu.click();
-        await newpaste.dropdownMenuExpiration.click();               
-        await newpaste.value10MinExpirtMenu.click();
-        await newpaste.titleField.setValue(testdata2.title);        
-        await newpaste.createBtn.click();
-        expect(await savedpaste.savedTitleField.getText()).toEqual(testdata2.title);       
-        expect(await savedpaste.savedSntxHighlight.getText()).toEqual(testdata2.syntax);       
-        const str = await (savedpaste.savedTextRaws.map(text => text.getText())); //read saved textcode
-        expect(await str.toString()).toEqual(testdata2.text);
+describe('Testing pastebin.com:', () => {
+    
+    describe ('First test "I can win": new short paste without saving', ()=> {
+        
+        it('text is correct', async () => {
+            newpaste.open();
+            await newpaste.createNewPaste(testData1);                    
+            expect(await newpaste.newPasteField.getValue()).toEqual(testData1.text);            
+        })
+        it ('expiration time is correct', async () => {
+            expect(await newpaste.dropDownMenuExpiration.getText()).toEqual(testData1.expiration);
+        })
+        it ('title is correct', async () => {
+            expect(await newpaste.titleField.getValue()).toEqual(testData1.title);            
+        })
+    })   
+    describe ('Second test "Bring it on": new full paste with saving', () => {
+        it ('text is correct', async () => {
+            newpaste.open();
+            await newpaste.createNewPaste(testData2);                
+            await newpaste.createButton.click();            
+            await  savedpaste.savedSyntaxHighlight.waitForDisplayed();           
+            const str = await (savedpaste.savedTextRaws.map(text => text.getText())); //read saved textcode
+            expect(await str.toString()).toEqual(testData2.text);        
+        })
+        it ('syntax highlight is correct', async () => {            
+            expect(await savedpaste.savedSyntaxHighlight.getText()).toEqual(testData2.syntax);
+        })
+        it ('title is correct', async () => {            
+            expect(await savedpaste.savedTitleField.getText()).toEqual(testData2.title);            
+        })
     })    
 })
