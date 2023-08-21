@@ -17,7 +17,8 @@ class NewPastePage extends HomePage {
         return $('//li[text()="10 Minutes"]');
     }
     get dropDownMenuHighlght() {        
-        return $('.select2-selection--single #select2-postform-format-container');
+        return $('#select2-postform-format-container');
+        
     }
     get valueBashHighlghtMenu() {
         return $("//li[text()='Bash']");
