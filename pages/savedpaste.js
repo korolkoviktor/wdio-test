@@ -1,12 +1,14 @@
-class SavedPaste {    
+const HomePage = require('./page');
+
+class SavedPastePage extends HomePage {
     get savedTitleField() {
-        return $('.info-top h1'); 
+        return $('.info-top h1');
     }
-    get savedSntxHighlight() {
-        return $("//a[text()='Bash']");        
+    get savedSyntaxHighlight() {
+        return $("//a[text()='Bash']");
     }
     get savedTextRaws() {
         return $$('ol.bash');
-    }    
+    }
 }
-module.exports =SavedPaste;
+module.exports = SavedPastePage;
